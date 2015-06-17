@@ -3,4 +3,7 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+
+    <string name="txtBuscaHint">Insira o nome do artista</string>
+    <string name="contentDescriptionImgArtist">Imagem artista</string>
 </resources>

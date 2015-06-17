@@ -12,5 +12,17 @@
         android:imeOptions="actionSearch"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:hint="@string/txtBuscaHint"
+        android:inputType="text" />
+
+    <fragment
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:name="com.example.aluras.spotifystreamer.ArtistFragment"
+        android:id="@+id/Artistfragment"
+        android:layout_below="@+id/txtBuscaArtista"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        tools:layout="@layout/fragment_artist" />
 </RelativeLayout>
