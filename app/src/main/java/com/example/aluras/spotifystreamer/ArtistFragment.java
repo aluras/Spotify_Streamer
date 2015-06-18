@@ -50,9 +50,6 @@ public class ArtistFragment extends Fragment {
 
         ArrayList<String> dados = new ArrayList<String>();
 
-        //dados.add("Titãs");
-        //dados.add("Engenhiros do Hawai");
-
         mArtistAdapter = new ArrayAdapter<String>(getActivity(), R.layout.list_item_artist, R.id.txtArtistName,dados);
 
         ListView listView =(ListView) rootView.findViewById(R.id.listViewArtist);
@@ -61,6 +58,7 @@ public class ArtistFragment extends Fragment {
 
         return rootView;
     }
+
 
     private void updateArtists(){
         new FetchArtistTask().execute();
