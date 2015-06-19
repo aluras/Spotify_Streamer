@@ -4,7 +4,6 @@ package com.example.aluras.spotifystreamer;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,16 +13,14 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import kaaes.spotify.webapi.android.SpotifyApi;
 import kaaes.spotify.webapi.android.SpotifyService;
 import kaaes.spotify.webapi.android.models.Artist;
-import kaaes.spotify.webapi.android.models.Artists;
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import kaaes.spotify.webapi.android.models.ArtistsPager;
 
 
 /**
@@ -49,7 +46,7 @@ public class ArtistFragment extends Fragment {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
                 if (i == EditorInfo.IME_ACTION_SEARCH){
-                    updateArtists();
+                    updateArtists(textView.getText().toString());
                     return true;
                 }
 
@@ -69,43 +66,41 @@ public class ArtistFragment extends Fragment {
     }
 
 
-    private void updateArtists(){
-        new FetchArtistTask().execute();
+    private void updateArtists(String strNome){
+        new FetchArtistTask().execute(strNome);
     }
 
-    public class FetchArtistTask extends AsyncTask<Void,Void,String[]>{
+    public class FetchArtistTask extends AsyncTask<String,Void,String[]>{
         
         @Override
-        protected String[] doInBackground(Void... voids) {
+        protected String[] doInBackground(String... params) {
 
             final ArrayList<String> dados = new ArrayList<String>();
 
-            SpotifyApi api = new SpotifyApi();
-            SpotifyService spotify = api.getService();
-            spotify.getArtists("Engenheiros", new Callback<Artists>() {
-                @Override
-                public void success(Artists artists, Response response) {
-                    for (Artist artist : artists.artists){
+            if(!params[0].equals("")){
+                SpotifyApi api = new SpotifyApi();
+                SpotifyService spotify = api.getService();
+
+                ArtistsPager artists = spotify.searchArtists(params[0]);
+                for (Artist artist : artists.artists.items){
+                    if(artist != null){
                         dados.add(artist.name);
                     }
                 }
+            }
 
-                @Override
-                public void failure(RetrofitError error) {
-
-                }
-            });
-            
             return dados.toArray(new String[dados.size()]);
         }
 
         @Override
         protected void onPostExecute(String[] strings) {
-            if (strings != null){
+            if (strings != null && strings.length != 0){
                 mArtistAdapter.clear();
                 for(String dayForecastStr : strings){
                     mArtistAdapter.add(dayForecastStr);
                 }
+            }else{
+                Toast.makeText(getActivity(), ":( - Nenhum artista encontrado.", Toast.LENGTH_SHORT).show();
             }
 
         }
