@@ -2,10 +2,12 @@ package com.example.aluras.spotifystreamer;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.DrawableRes;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -13,12 +15,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.squareup.picasso.Picasso;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -70,6 +75,17 @@ public class ArtistFragment extends Fragment {
 
         listView.setAdapter(mArtistAdapter);
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Artist item = (Artist)adapterView.getItemAtPosition(i);
+
+                Intent trackIntent = new Intent(getActivity(),TracksActivity.class);
+                trackIntent.putExtra(Intent.EXTRA_TEXT, item.id);
+                startActivity(trackIntent);
+            }
+        });
+
         return rootView;
     }
 
@@ -97,10 +113,15 @@ public class ArtistFragment extends Fragment {
 
             if (imagens.size() > 0){
                 for(Image image : imagens){
-                    if(image.width == 64){
-                        new DownloadImageTask(ivFiguraArtista).execute(image.url);
+                    if(image.width == 300){
+                        Picasso.with(getActivity())
+                                .load(image.url)
+                                .resize(100,100)
+                                .into(ivFiguraArtista);
                     }
                 }
+            }else{
+                ivFiguraArtista.setImageResource(R.mipmap.ic_disk);
             }
 
             tvNomeArtista.setText(artist.name);
@@ -142,31 +163,6 @@ public class ArtistFragment extends Fragment {
                 Toast.makeText(getActivity(), ":( - Nenhum artista encontrado.", Toast.LENGTH_SHORT).show();
             }
 
-        }
-    }
-
-    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-        ImageView bmImage;
-
-        public DownloadImageTask(ImageView bmImage) {
-            this.bmImage = bmImage;
-        }
-
-        protected Bitmap doInBackground(String... urls) {
-            String urldisplay = urls[0];
-            Bitmap mIcon11 = null;
-            try {
-                InputStream in = new java.net.URL(urldisplay).openStream();
-                mIcon11 = BitmapFactory.decodeStream(in);
-            } catch (Exception e) {
-                Log.e("Error", e.getMessage());
-                e.printStackTrace();
-            }
-            return mIcon11;
-        }
-
-        protected void onPostExecute(Bitmap result) {
-            bmImage.setImageBitmap(result);
         }
     }
 

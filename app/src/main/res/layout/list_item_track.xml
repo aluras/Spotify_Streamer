@@ -7,7 +7,7 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imgArtist"
+        android:id="@+id/imgTrack"
         android:layout_gravity="center_vertical"
         android:src="@mipmap/ic_disk"
         android:clickable="true"
@@ -16,7 +16,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/txtArtistName"
+        android:id="@+id/txtTrackName"
         android:layout_gravity="center_vertical"
         android:layout_marginStart="60dp"
         android:layout_marginLeft="60dp"/>
