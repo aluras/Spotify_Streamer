@@ -1,5 +1,6 @@
 package com.example.aluras.spotifystreamer;
 
+import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -23,8 +24,6 @@ import java.util.Map;
 
 import kaaes.spotify.webapi.android.SpotifyApi;
 import kaaes.spotify.webapi.android.SpotifyService;
-import kaaes.spotify.webapi.android.models.Artist;
-import kaaes.spotify.webapi.android.models.ArtistsPager;
 import kaaes.spotify.webapi.android.models.Image;
 import kaaes.spotify.webapi.android.models.Track;
 import kaaes.spotify.webapi.android.models.Tracks;
@@ -79,6 +78,7 @@ public class TracksActivityFragment extends Fragment {
                 convertView = LayoutInflater.from(getActivity()).inflate(R.layout.list_item_track,parent,false);
             }
             TextView tvTrackName = (TextView) convertView.findViewById(R.id.txtTrackName);
+            TextView tvAlbumName = (TextView) convertView.findViewById(R.id.txtAlbum);
             ImageView ivTrackImage = (ImageView) convertView.findViewById(R.id.imgTrack);
 
             List<Image> imagens = track.album.images;
@@ -93,6 +93,7 @@ public class TracksActivityFragment extends Fragment {
             }
 
             tvTrackName.setText(track.name);
+            tvAlbumName.setText(track.album.name);
             return convertView;
         }
     }

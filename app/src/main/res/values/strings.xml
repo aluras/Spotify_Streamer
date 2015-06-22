@@ -6,5 +6,5 @@
 
     <string name="txtBuscaHint">Insira o nome do artista</string>
     <string name="contentDescriptionImgArtist">Imagem artista</string>
-    <string name="title_activity_tracks">TracksActivity</string>
+    <string name="title_activity_tracks">Top 10 Tracks</string>
 </resources>

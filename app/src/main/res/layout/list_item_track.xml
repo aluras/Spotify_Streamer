@@ -1,24 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:minHeight="60dp"
-    android:measureAllChildren="true">
+    android:layout_gravity="center_vertical"
+    android:gravity="center_vertical">
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/imgTrack"
-        android:layout_gravity="center_vertical"
         android:src="@mipmap/ic_disk"
         android:clickable="true"
         android:contentDescription="@string/contentDescriptionImgArtist" />
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/txtTrackName"
         android:layout_gravity="center_vertical"
-        android:layout_marginStart="60dp"
-        android:layout_marginLeft="60dp"/>
+        android:layout_marginLeft="15dp">
 
-</FrameLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtTrackName"
+            android:layout_gravity="center_vertical|left" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtAlbum"
+            android:layout_gravity="left|center_vertical" />
+    </LinearLayout>
+</LinearLayout>
+
