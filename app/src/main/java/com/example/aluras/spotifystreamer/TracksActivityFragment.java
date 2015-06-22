@@ -1,14 +1,14 @@
 package com.example.aluras.spotifystreamer;
 
-import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -55,6 +55,17 @@ public class TracksActivityFragment extends Fragment {
         ListView listView =(ListView) rootView.findViewById(R.id.listViewTracks);
 
         listView.setAdapter(mTrackAdapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Track item = (Track)adapterView.getItemAtPosition(i);
+
+                Intent trackIntent = new Intent(getActivity(),PlayerActivity.class);
+                trackIntent.putExtra(Intent.EXTRA_TEXT, item.id);
+                startActivity(trackIntent);
+            }
+        });
 
         updateTracks(id);
 
